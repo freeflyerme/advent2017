@@ -3,13 +3,17 @@ import java.util.*
 class Day2 {
     fun part22() {
         // search the area and get the only two numbers that divided each other
+        findCheckSum(::getDivisibleResultChecksum)
+    }
+
+    private fun findCheckSum(action: (List<Int>) -> Int) {
         val scan = Scanner(ClassLoader.getSystemResourceAsStream("resources/Day2_1.txt"))
         var checkSums = ArrayList<Int>()
         while (scan.hasNextLine()) {
             val line = scan.nextLine()
             val result = line.split("\t")
             val resultInt = result.map { e -> Integer.parseInt(e) }
-            val check = getDivisibleResultChecksum(resultInt)
+            val check = action(resultInt)
             checkSums.add(check)
         }
 
@@ -28,19 +32,7 @@ class Day2 {
     }
 
     fun part21() {
-//    val input = ClassLoader.getSystemResource("resources/Day2_1.txt").readText().trim()
-        val scan = Scanner(ClassLoader.getSystemResourceAsStream("resources/Day2_1.txt"))
-        var checkSums = ArrayList<Int>()
-        while (scan.hasNextLine()) {
-            val line = scan.nextLine()
-            val result = line.split("\t")
-            val resultInt = result.map { e -> Integer.parseInt(e) }
-            val check = getChecksum(resultInt)
-            checkSums.add(check)
-        }
-
-        println(checkSums.sum())
-
+        findCheckSum(::getChecksum)
     }
 
     private fun getChecksum(result: List<Int>): Int {
@@ -56,7 +48,7 @@ class Day2 {
 // There is no default static methods in Java
 fun main(args: Array<String>) {
     val day2 = Day2()
-    day2.part21()
-    day2.part22()
+    day2.part21() //45158
+    day2.part22() //294
 }
 
