@@ -7,7 +7,7 @@ fun main(args : Array<String>) {
 }
 
 fun part2Redux() { // no redundant return type
-    val input = ClassLoader.getSystemResource("resources/Day1_2.txt").readText().trim();
+    val input = ClassLoader.getSystemResource("resources/Day1_1.txt").readText().trim();
     val sum = calculateSum(input, ::getNextIndexPart2)
     println(sum)
 }
@@ -46,7 +46,7 @@ fun getNextIndexPart1(i: Int, length: Int): Int {
 
 // Initial solution, part2
 fun part2() { // no redundant return type
-    val input = ClassLoader.getSystemResource("resources/Day1_2.txt").readText().trim();
+    val input = ClassLoader.getSystemResource("resources/Day1_1.txt").readText().trim();
     var sum = 0;
 
     for (i in 0 until input.length / 2) { // Lesson: Exclusive of the last element
