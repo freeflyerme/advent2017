@@ -1,5 +1,3 @@
-import java.util.*
-
 // Lesson: Kotlin Streams -- simplified like Groovy streams
 // https://stackoverflow.com/questions/34642254/what-java-8-stream-collect-equivalents-are-available-in-the-standard-kotlin-libr
 
@@ -11,10 +9,7 @@ fun main(args: Array<String>) {
 }
 
 fun part5_1() {
-    val input = ClassLoader.getSystemResource("resources/Day5.txt").readText().trim();
-    var numbersList: List<Int> = input.split("\n").map{ Integer.parseInt(it) }
-    var numbers = ArrayList(numbersList)
-
+    var numbers = readAsIntList("Day5.txt")
     val size = numbers.size
     var current = 0
     var next = current
@@ -34,11 +29,7 @@ fun part5_1() {
 
 
 fun part5_2() {
-    val scan = Scanner(ClassLoader.getSystemResourceAsStream("resources/Day5.txt"))
-    var numbers = ArrayList<Int>()
-    while (scan.hasNextLine()) {
-        numbers.add(Integer.parseInt(scan.nextLine()))
-    }
+    var numbers = readAsIntList("Day5.txt")
 
     val size = numbers.size
     var current = 0
