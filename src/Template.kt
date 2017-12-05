@@ -4,9 +4,9 @@ fun main(args: Array<String>) {
 
 }
 
-fun partTemplate() {
-    val scan = Scanner(ClassLoader.getSystemResourceAsStream("resources/Day3_1.txt"))
-    val input = ClassLoader.getSystemResource("resources/Day3_1.txt").readText().trim();
+fun partT_1() {
+    val scan = Scanner(ClassLoader.getSystemResourceAsStream("resources/DayX.txt"))
+    val input = ClassLoader.getSystemResource("resources/DayX.txt").readText().trim();
 
 
 }
