@@ -8,7 +8,7 @@ fun main(args : Array<String>) {
 
 fun part2Redux() { // no redundant return type
     val input = ClassLoader.getSystemResource("resources/Day1_1.txt").readText().trim();
-    val sum = calculateSum(input, ::getNextIndexPart2)
+    val sum = calculateSum(input, ::getNextIndexPart2) // Lesson: pass a method in as a lambda
     println(sum)
 }
 

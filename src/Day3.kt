@@ -42,7 +42,7 @@ fun part3_1Redux() {
         i = getNextNum(i)
         board[x][y] = i
 
-        if (i > end) {
+        if (i > end) { // break unnecessary
             break@find  // Lesson: how to break out of named loops -- just break by itself only escape the if statement here
         }
 
@@ -80,10 +80,6 @@ fun part3_2Redux() {
 
         // 3. set the value at the position
         board[x][y] = i
-
-        if (i > end) {
-            break@find
-        }
 
         // 4. change direction as necessary
         if (!keepGoing(currentDirection, board, x, y)) {

@@ -7,6 +7,8 @@ fun main(args: Array<String>) {
     part4_2()
 }
 
+// Stream.distinct
+
 fun part4_1() {
     val scan = Scanner(ClassLoader.getSystemResourceAsStream("resources/Day4_1.txt"))
     var valid = 0
@@ -54,13 +56,7 @@ fun toWordSoup(input : String): HashMap<Char, Int> {
         var occur = result.get(c) ?: 0
         occur++
         result.put(c, occur)
-//        if (result.containsKey(c)) {
-//            var occur: Int = result.get(c) ?: 0 // Lesson: dealing with Optional like ? results
-//            occur += 1
-//            result.put(c, occur)
-//        } else {
-//            result.put(c, 1)
-//        }
+
     }
     return result
 }
