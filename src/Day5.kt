@@ -19,7 +19,7 @@ fun part5_1() {
     while (current >= 0 && current < size) { // 381680
 
         next = numbers[current] + current
-        numbers[current] = numbers[current] + 1
+        numbers[current]++
         current = next
         jumpCtr++
     }

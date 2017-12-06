@@ -6,7 +6,7 @@ fun readAsStringList(fileName : String): ArrayList<String> {
 }
 
 fun readAsIntList(fileName : String): ArrayList<Int> {
-    val input = ClassLoader.getSystemResource("resources/" + fileName).readText().trim().split("\n").map{ it.toInt() }
+    val input = ClassLoader.getSystemResource("resources/" + fileName).readText().trim().split("\t").map{ it.toInt() }
     return ArrayList(input)
 }
 
