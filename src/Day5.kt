@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
 }
 
 fun part5_1() {
-    var numbers = readAsIntList("Day5.txt")
+    var numbers = readAsIntList("Day5.txt", "\n")
     val size = numbers.size
     var current = 0
     var next = current
@@ -29,7 +29,7 @@ fun part5_1() {
 
 
 fun part5_2() {
-    var numbers = readAsIntList("Day5.txt")
+    var numbers = readAsIntList("Day5.txt", "\n")
 
     val size = numbers.size
     var current = 0

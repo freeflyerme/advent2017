@@ -4,7 +4,7 @@ fun main(args: Array<String>) {
 
 fun part6_1() {
 
-    var inList = readAsIntList("Day6.txt")
+    var inList = readAsIntList("Day6.txt", "\n")
 
     val configSeen = HashMap<ArrayList<Int>, Int>()
     var counter = 0
