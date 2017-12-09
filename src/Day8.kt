@@ -2,6 +2,8 @@ fun main(args: Array<String>) {
     part8_1()
 }
 
+// Do a DSL?
+
 fun part8_1() {
     // operations: inc / dec
     // registers -- could be any -- use a hashmap, with values

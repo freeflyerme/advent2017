@@ -15,5 +15,9 @@ fun readLineByLine(fileName: String): Scanner {
     return scan
 }
 
+fun readString(fileName: String): String {
+    return ClassLoader.getSystemResource("resources/" + fileName).readText().trim()
+}
+
 // TODO:
 // Practice iterating through collections efficiently

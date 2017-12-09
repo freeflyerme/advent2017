@@ -1,9 +1,9 @@
 fun main(args: Array<String>) {
-
+    partT_1()
 }
 
 fun partT_1() {
-    readAsIntList("DayX.txt", "\n")
+    val list = readAsIntList("DayX.txt", "\n")
 
 }
 

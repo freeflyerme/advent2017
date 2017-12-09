@@ -4,19 +4,12 @@ fun main(args: Array<String>) {
 
 data class Node constructor (val name: String, val weight:Int, var treeWeight: Int = 0) // lesson: data class
 
-fun part7_2() {
-    // high level solution
-    // need to build a graph of nodes and children
-    // from parent node, go down, then at each level, check which one is imbalanced -> its weight doesn't match the others
-    // pass the desired weight down, and check the sum of the children -- if children sums match, then it's the parent
-    // if one children's sum don't match, repeat.
-    // if there are no children, then the parent found is it
+fun part7_2() { // TODO: solve this better programmatically
+    // result: 1060
 
-    // build a tree
-    // start from parent, recursively check this stuff
+    // replace Adjacency List with a tree structure, but also have a way to access the nodes by name?
 
     val adjList = HashMap<Node, ArrayList<Node>>()
-
 
     // do 2 passes -- first one creates all of the nodes
     // 2nd pass -- create the parents for the nodes
