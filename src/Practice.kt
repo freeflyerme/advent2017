@@ -12,4 +12,6 @@ fun main(args: Array<String>) {
     val readOnly: List<Int> = original  // the List<Int> creates read only view, internal
     // readOnly.add(1) // doesn't compile, the add doesn't work
     println(readOnly)
+
 }
+
