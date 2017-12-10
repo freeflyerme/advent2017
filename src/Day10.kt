@@ -3,6 +3,7 @@ fun main(args: Array<String>) {
 }
 fun test() { // repeatXor does its job!
 //    65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22
+    // Xor is associative (any order executed in sequence) and commutative (swap left and right)
     var testInput = listOf(65,27,9,1,4,3,40,50,91,7,6,0,2,5,68,22)
     println(repeatXor(testInput,0,15)) // 64
 }
@@ -30,9 +31,8 @@ fun part10_2() {
     var start = 0
     var end: Int
     var skip = 0
-    // one round of hashing
     for (loop in 0 until 64) {
-        for (aLen in intArray) {
+        for (aLen in intArray) { // Lesson: Kotlin passes same as Java -- reference for ref objects, value for primitives
             end = (start + aLen - 1) % input.size
             input.reverse(start, end, aLen)
             start = (end + skip + 1) % input.size
@@ -41,14 +41,31 @@ fun part10_2() {
     }
 
     // 64 rounds later... intArray is sparseHash
-    println(input)
+    // println(input) // debug
+    val groupBy = input.withIndex().groupBy { it.index / 16 } // Lesson: get index for any array
+    val map = groupBy.map { entry -> entry.value.map { it.value } } // Lesson: how to go from a map with index, to just the values
+    // println(map) // debug
 
-    var denseHash = ArrayList<Int>()
-    for(i in 0 until 16) {
-        denseHash.add(repeatXor(input, i*16, (i*16 + 15)))
+    // Lesson: fold, also lock down first parameter syntax (currying).  Fold right is like fold, but starts last and goes left
+    val hash = map.map { list -> list.fold(0) { total, next -> total.xor(next) } }
+
+    hash.forEach { decNumber ->
+        var hex = Integer.toHexString(decNumber)
+        print( if (hex.length == 1) "0"+hex else hex ) // Lesson: no Ternary operator in Kotlin
     }
 
-    // 3efbe78a8d82f2997931a4aa0b16a9d -- AoC 2017
+    // firstHashImpl(input) // break up list by 16's, then iterate through them
+
+}
+
+private fun firstHashImpl(input: MutableList<Int>) {
+    var denseHash = mutableListOf<Int>()
+    for (i in 0 until 16) {
+
+        denseHash.add(repeatXor(input, i * 16, (i * 16 + 15)))
+    }
+
+    // 2f8c3d2100fdd57cec130d928b0fd2dd -- Day10.txt
     for (i in denseHash) {
         var print = Integer.toHexString(i) // Lesson: toHexString doesn't have preceding 0's.  Also, how to convert to Hex
         if (print.length == 1) {
@@ -56,7 +73,6 @@ fun part10_2() {
         }
         print(print)
     }
-
 }
 
 fun repeatXor(array : List<Int>, start: Int, end: Int): Int {
@@ -96,7 +112,7 @@ fun MutableList<Int>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: 
     var end = index2
     while (numSwaps > 0) {
         swap(start, end)
-        start = (start + 1) % size
+        start = (start + 1) % this.size
         end = (end - 1 + size) % size // Lesson: apparently mods can be negative
         numSwaps--
     }
