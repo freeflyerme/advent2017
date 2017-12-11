@@ -21,3 +21,21 @@ fun readString(fileName: String): String {
 
 // TODO:
 // Practice iterating through collections efficiently
+// Day 10 Reverse sublist function
+fun MutableList<Int>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: Extension class for ArrayList for custom reverse
+    var numSwaps = swaps / 2
+    var start = index1
+    var end = index2
+    while (numSwaps > 0) {
+        swap(start, end)
+        start = (start + 1) % this.size
+        end = (end - 1 + size) % size // Lesson: apparently mods can be negative
+        numSwaps--
+    }
+}
+
+fun MutableList<Int>.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponds to the list
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
