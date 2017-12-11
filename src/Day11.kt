@@ -27,7 +27,7 @@ fun part11_1() {
 
 private fun calculateDist(y: Int, x: Int): Int {
     // Lesson: have a formulated plan before submitting -- exponentially worse backoff time
-    // Problem particular: in a Hex grid, a 
+    // Problem particular: in a Hex grid, a move in diagonal is only "half" a move up / down
     var numMoves = 0
     var ySpacesLeft : Int
     if (abs(y) > abs(x)) {

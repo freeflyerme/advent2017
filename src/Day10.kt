@@ -28,10 +28,21 @@ fun part10_2() {
         input.add(i)
     }
 
+    var byteArray = problemInput.toByteArray()
+    byteArray = byteArray.plus(17) // Lesson: byteArray.plus returns an copy, and is tim
+
+
     var start = 0
     var end: Int
     var skip = 0
     for (loop in 0 until 64) {
+//        for (aLen in byteArray) { // Lesson: Kotlin passes same as Java -- reference for ref objects, value for primitives
+//            end = (start + aLen - 1) % input.size
+//            input.reverse(start, end, aLen.toInt()) // Lesson: bytes are auto converted to Int, with an operator
+//            start = (end + skip + 1) % input.size
+//            skip++
+//        }
+
         for (aLen in intArray) { // Lesson: Kotlin passes same as Java -- reference for ref objects, value for primitives
             end = (start + aLen - 1) % input.size
             input.reverse(start, end, aLen)
