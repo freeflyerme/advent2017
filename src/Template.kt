@@ -4,5 +4,10 @@ fun main(args: Array<String>) {
 
 fun partT_1() {
     val list = readAsIntList("DayX.txt", "\n")
+    val input = readString("DayX.txt")
+
+}
+
+fun changeablePart() {
 
 }
