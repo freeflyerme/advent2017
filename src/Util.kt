@@ -39,3 +39,22 @@ fun MutableList<Int>.swap(index1: Int, index2: Int) {
     this[index1] = this[index2]
     this[index2] = tmp
 }
+
+/**
+ * Pre-condition: toVisit is populated with the first item to visit
+ * Each visited node has an action performed upon it
+ * Post-Condition: includes has all of the elements visited
+ */
+fun <T> breadthFirstVisit(toVisit: LinkedList<T>, includes: HashSet<T>, adjList: HashMap<T, ArrayList<T>>, action: (T) -> Unit ) {
+    while (!toVisit.isEmpty()) {
+        val visited = toVisit.poll()
+        includes.add(visited)
+        action(visited)
+        val neighbors = adjList.get(visited)!!
+        for (n in neighbors) {
+            if (!includes.contains(n)) {
+                toVisit.add(n)
+            }
+        }
+    }
+}
