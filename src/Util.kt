@@ -19,25 +19,14 @@ fun readString(fileName: String): String {
     return ClassLoader.getSystemResource("resources/" + fileName).readText().trim()
 }
 
-// TODO:
-// Practice iterating through collections efficiently
-// Day 10 Reverse sublist function
-fun MutableList<Int>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: Extension class for ArrayList for custom reverse
-    var numSwaps = swaps / 2
-    var start = index1
-    var end = index2
-    while (numSwaps > 0) {
-        swap(start, end)
-        start = (start + 1) % this.size
-        end = (end - 1 + size) % size // Lesson: apparently mods can be negative
-        numSwaps--
+// Utilizes the "born context" of the parsingFunction to populate a result.  Less functional
+fun readFileIntoData(fileName: String, split: String, parsingFunction: (String) -> Unit) {
+    val fileAsString = readString(fileName)
+    val fileSplit = fileAsString.split(split)
+    fileSplit.forEach { part ->
+        parsingFunction(part)
     }
-}
 
-fun MutableList<Int>.swap(index1: Int, index2: Int) {
-    val tmp = this[index1] // 'this' corresponds to the list
-    this[index1] = this[index2]
-    this[index2] = tmp
 }
 
 /**
@@ -59,3 +48,23 @@ fun <T> breadthFirstVisit(toVisit: LinkedList<T>, included: HashSet<T>, adjList:
         }
     }
 }
+
+// Day 10 reverse sublist
+fun MutableList<Int>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: Extension class for ArrayList for custom reverse
+    var numSwaps = swaps / 2
+    var start = index1
+    var end = index2
+    while (numSwaps > 0) {
+        swap(start, end)
+        start = (start + 1) % this.size
+        end = (end - 1 + size) % size // Lesson: apparently mods can be negative
+        numSwaps--
+    }
+}
+
+fun MutableList<Int>.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponds to the list
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+

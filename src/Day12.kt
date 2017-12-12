@@ -1,7 +1,8 @@
 import java.util.*
+import kotlin.collections.HashMap
 
 fun main(args: Array<String>) {
-    part12_1()
+//    part12_1()
     part12_2()
 }
 
@@ -9,19 +10,21 @@ fun main(args: Array<String>) {
 // arise, as in Stu's solution
 // Great job implementing breadth first on the fly so quickly.
 
+
 fun part12_2() {  // Answer: 207
-    val scanner = readLineByLine("Day12.txt")
-    // adj list
-    val adjList = HashMap<String, ArrayList<String>>()
-    while (scanner.hasNextLine()) {
-        val line = scanner.nextLine().replace(",", "")
-        val split = line.split(" ")
+
+    val adjListAccum = HashMap<String, ArrayList<String>>()
+    readFileIntoData("Day12.txt", "\n") {
+        line ->
         val neighbors = ArrayList<String>()
+        val split = line.replace(",", "").split(" ")
         for (i in 2 until split.size) {
             neighbors.add(split[i])
         }
-        adjList.put(split[0], neighbors)
+        adjListAccum.put(split[0], neighbors)
     }
+
+    println(adjListAccum) // debug
 
     val visited = HashSet<String>()
     val toVisit = LinkedList<String>()
@@ -29,11 +32,11 @@ fun part12_2() {  // Answer: 207
     // Lesson: when copying and pasting stuff, be sure to mind what previous states were copied
     var numGroups = 0
     val leftToVisit = HashSet<String>()
-    leftToVisit.addAll(adjList.keys)
+    leftToVisit.addAll(adjListAccum.keys)
 
     while (leftToVisit.isNotEmpty()) {
         toVisit.offer(leftToVisit.first())  // Lesson: when in doubt, debug!
-        breadthFirstVisit(toVisit, visited, adjList)
+        breadthFirstVisit(toVisit, visited, adjListAccum)
 
         // all the visited nodes are in includes
         // println(includes) // debug
