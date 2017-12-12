@@ -35,7 +35,7 @@ private fun calculateDist(y: Int, x: Int): Int {
         ySpacesLeft = abs(y) - abs(x)
         numMoves += ySpacesLeft / 2
     } else {
-        numMoves = x
+        numMoves = abs(x)
     }
     return numMoves
 }
@@ -44,11 +44,9 @@ fun move(dir: String): Pair<Int, Int> {
     when (dir) {
         "n" -> return Pair(0,2)
         "ne" -> return Pair(1,1)
-        "e" -> return Pair(1,0)
         "se" -> return Pair(1,-1)
         "s" -> return Pair(0,-2)
         "sw" -> return Pair(-1,-1)
-        "w" -> return Pair(-1,0)
         "nw" -> return Pair(-1,1)
     }
     return Pair(0,0)
