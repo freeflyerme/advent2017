@@ -1,6 +1,7 @@
 import java.util.*
 
 fun main(args: Array<String>) {
+    part12_1()
     part12_2()
 }
 
@@ -22,7 +23,7 @@ fun part12_2() {  // Answer: 207
         adjList.put(split[0], neighbors)
     }
 
-    val includes = HashSet<String>()
+    val visited = HashSet<String>()
     val toVisit = LinkedList<String>()
 
     // Lesson: when copying and pasting stuff, be sure to mind what previous states were copied
@@ -32,12 +33,12 @@ fun part12_2() {  // Answer: 207
 
     while (leftToVisit.isNotEmpty()) {
         toVisit.offer(leftToVisit.first())  // Lesson: when in doubt, debug!
-        visitFromNode(toVisit, includes, adjList)
+        breadthFirstVisit(toVisit, visited, adjList)
 
         // all the visited nodes are in includes
         // println(includes) // debug
-        leftToVisit.removeAll(includes)
-        includes.clear()
+        leftToVisit.removeAll(visited)
+        visited.clear()
         toVisit.clear()
         numGroups++
     }
@@ -46,6 +47,7 @@ fun part12_2() {  // Answer: 207
 
 }
 
+// This function was later generalized by Util.breadthFirstVisit()
 private fun visitFromNode(toVisit: LinkedList<String>, includes: HashSet<String>, adjList: HashMap<String, ArrayList<String>>) {
     while (!toVisit.isEmpty()) {
         val visited = toVisit.poll()
@@ -79,16 +81,7 @@ fun part12_1() { // 145
     val toVisit = LinkedList<String>()
     toVisit.offer("0")
 
-    while(!toVisit.isEmpty()) {
-        val visited = toVisit.poll()
-        includes.add(visited)
-        val neighbors = adjList.get(visited) !!
-        for (n in neighbors) {
-            if (!includes.contains(n)) {
-                toVisit.add(n)
-            }
-        }
-    }
+    visitFromNode(toVisit, includes, adjList)
 
     println(includes.size)
 
