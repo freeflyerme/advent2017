@@ -24,6 +24,18 @@ fun part12_2() {  // Answer: 207
         adjListAccum.put(split[0], neighbors)
     }
 
+    // Alternative fold approach
+//    val adjListAccum = HashMap<String, ArrayList<String>>()
+//    readAsStringList("Day12.txt", "\n").fold(adjListAccum) { current, line ->
+//        val neighbors = ArrayList<String>()
+//        val split = line.replace(",", "").split(" ")
+//        for (i in 2 until split.size) {
+//            neighbors.add(split[i])
+//        }
+//        current.put(split[0], neighbors)
+//        current
+//    }
+
     println(adjListAccum) // debug
 
     val visited = HashSet<String>()

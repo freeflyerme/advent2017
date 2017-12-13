@@ -93,6 +93,7 @@ fun extractNodes(adjList: HashMap<Node, ArrayList<Node>>) {
 }
 
 fun part7_1() {
+    // alternative -- create adjlist, then just find traverse until no parent
     val allElementsAndParent = HashMap<String, String>()
     val allElements = HashSet<String>()
 

@@ -62,6 +62,8 @@ fun toWordSoup(input : String): HashMap<Char, Int> {
 }
 
 fun isValid(split: List<String>): Boolean {
+    // alternative: check distinct count vs count
+    // split.distinct().size == split.size
     var set = HashSet<String>()
     for (word in split) {
         if (set.contains(word)) {
