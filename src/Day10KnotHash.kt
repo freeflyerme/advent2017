@@ -1,5 +1,5 @@
 fun main(args: Array<String>) {
-    part10_2()
+    part10_1()
 }
 fun test() { // repeatXor does its job!
 //    65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22
@@ -16,6 +16,11 @@ fun part10_2() {
     // Then, do what you did before, but 64 rounds, preserving start and skip numbers between rounds
     // Then hash 16 blocks, then print them out in Hex
 
+    fullKnotHash(problemInput)
+
+}
+
+fun fullKnotHash(problemInput: String): String {
     var intArray = mutableListOf<Int>()
     for (c in problemInput.toCharArray()) {
         intArray.add(c.toInt())
@@ -29,7 +34,7 @@ fun part10_2() {
     }
 
     var byteArray = problemInput.toByteArray()
-    byteArray = byteArray.plus(17) // Lesson: byteArray.plus returns an copy, and is tim
+    byteArray = byteArray.plus(17) // Lesson: byteArray.plus returns an copy
 
 
     var start = 0
@@ -53,11 +58,10 @@ fun part10_2() {
     // 64 rounds later... intArray is "sparse hash" as called by the problem
 
     // firstHashImpl(input) // break up list by 16's, then iterate through them
-    secondHashImpl(input)
-
+    return secondHashImpl(input)
 }
 
-private fun secondHashImpl(input: MutableList<Int>) {
+private fun secondHashImpl(input: MutableList<Int>): String {
     // println(input) // debug
     val groupBy = input.withIndex().groupBy { it.index / 16 } // Lesson: get index for any array
     val map = groupBy.map { entry -> entry.value.map { it.value } } // Lesson: how to go from a map with index, to just the values
@@ -66,10 +70,12 @@ private fun secondHashImpl(input: MutableList<Int>) {
     // Lesson: fold, also lock down first parameter syntax (currying).  Fold right is like fold, but starts last and goes left
     val hash = map.map { list -> list.fold(0) { total, next -> total.xor(next) } }
 
+    var output = ""
     hash.forEach { decNumber ->
         var hex = Integer.toHexString(decNumber)
-        print(if (hex.length == 1) "0" + hex else hex) // Lesson: no Ternary operator in Kotlin
+        output += (if (hex.length == 1) "0" + hex else hex) // Lesson: no Ternary operator in Kotlin
     }
+    return output
 }
 
 private fun firstHashImpl(input: MutableList<Int>) {
@@ -99,9 +105,17 @@ fun repeatXor(array : List<Int>, start: Int, end: Int): Int {
 
 fun part10_1() {
     val lengthLists = readAsIntList("Day10.txt", ",")
+    var input = knotHash(lengthLists) // change 5 to 255 later
+
+    println(input)
+    println(input[0] * input[1])
+
+}
+
+fun knotHash(lengthLists: ArrayList<Int>): ArrayList<Int> {
     var skip = 0
 
-    var input = mutableListOf<Int>() // change 5 to 255 later
+    var input = ArrayList<Int>() // change 5 to 255 later
     for (i in 0..255) {
         input.add(i)
     }
@@ -114,8 +128,5 @@ fun part10_1() {
         start = (end + skip + 1) % input.size
         skip++
     }
-
-    println(input)
-    println(input[0] * input[1])
-
+    return input
 }

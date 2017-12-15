@@ -68,3 +68,23 @@ fun MutableList<Int>.swap(index1: Int, index2: Int) {
     this[index2] = tmp
 }
 
+fun hexToBin(input: String) : String? {
+    var hexToBin = HashMap<String, String>()
+    hexToBin.put("0","0000")
+    hexToBin.put("1","0001")
+    hexToBin.put("2","0010")
+    hexToBin.put("3","0011")
+    hexToBin.put("4","0100")
+    hexToBin.put("5","0101")
+    hexToBin.put("6","0110")
+    hexToBin.put("7","0111")
+    hexToBin.put("8","1000")
+    hexToBin.put("9","1001")
+    hexToBin.put("a","1010")
+    hexToBin.put("b","1011")
+    hexToBin.put("c","1100")
+    hexToBin.put("d","1101")
+    hexToBin.put("e","1110")
+    hexToBin.put("f","1111")
+    return hexToBin.get(input)
+}
