@@ -50,7 +50,7 @@ fun <T> breadthFirstVisit(toVisit: LinkedList<T>, included: HashSet<T>, adjList:
 }
 
 // Day 10 reverse sublist
-fun MutableList<Int>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: Extension class for ArrayList for custom reverse
+fun <T> MutableList<T>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: Extension class for ArrayList for custom reverse
     var numSwaps = swaps / 2
     var start = index1
     var end = index2
@@ -62,7 +62,7 @@ fun MutableList<Int>.reverse(index1: Int, index2: Int, swaps: Int) { // Lesson: 
     }
 }
 
-fun MutableList<Int>.swap(index1: Int, index2: Int) {
+fun <T> MutableList<T>.swap(index1: Int, index2: Int) {
     val tmp = this[index1] // 'this' corresponds to the list
     this[index1] = this[index2]
     this[index2] = tmp
