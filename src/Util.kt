@@ -16,7 +16,7 @@ fun readLineByLine(fileName: String): Scanner {
 }
 
 fun readString(fileName: String): String {
-    return ClassLoader.getSystemResource("resources/" + fileName).readText().trim()
+    return ClassLoader.getSystemResource("resources/" + fileName).readText()
 }
 
 // Utilizes the "born context" of the parsingFunction to populate a result.  Less functional
