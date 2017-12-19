@@ -1,14 +1,21 @@
 import java.util.*
 
 fun main(args: Array<String>) {
-
     part18_2()
 }
 
 fun part18_2() { // 4601
     val list = readAsStringList("Day18.txt", "\n")
     var registers0 = HashMap<String, Long>()
+    for (i in listOf("a", "p", "i", "b", "f")) {
+        registers0.put(i, 0L)
+    }
+
     var registers1 = HashMap<String, Long>()
+    for (i in listOf("a", "p", "i", "b", "f")) {
+        registers0.put(i, 0L)
+    }
+
     registers0.put("p", 0)
     registers1.put("p", 1)
 
@@ -17,24 +24,24 @@ fun part18_2() { // 4601
     val executeInstruction0 = executeInstruction(0, list, registers0, ArrayDeque())
     var zeroInstr = executeInstruction0.first
     var zeroOutput = executeInstruction0.second
-    val executeInstruction1 = executeInstruction(0, list, registers1, zeroOutput)
+    val executeInstruction1 = executeInstruction(0, list, registers1, ArrayDeque()) // bug here -- should not have 0's
     var oneInstr = executeInstruction1.first
     var zeroInput = executeInstruction1.second
     totalOneOutput += zeroInput.size
     loop@while (true) {
 
-//        while (zeroInput.isNotEmpty()) {
+        if (zeroInput.isNotEmpty()) {
             val result0 = executeInstruction(zeroInstr, list, registers0, zeroInput)
             zeroInstr = result0.first
             zeroOutput = result0.second
-//        }
+        }
 
-//        while (zeroOutput.isNotEmpty()) {
+        if (zeroOutput.isNotEmpty()) {
             val result1 = executeInstruction(oneInstr, list, registers1, zeroOutput)
             oneInstr = result1.first
             zeroInput = result1.second
-            totalOneOutput += zeroInput.size
-//        }
+            totalOneOutput += zeroInput.size // error here, 127, not 132
+        }
 
         if (zeroInput.isEmpty() && zeroOutput.isEmpty()) {
             break@loop
@@ -46,9 +53,10 @@ fun part18_2() { // 4601
 }
 
 fun part18_1() { // 4601
-    val list = readAsStringList("Day18.txt", "\n")
+    val list = readAsStringList("Day18p.txt", "\n")
 
     var registers = HashMap<String, Long>()
+    registers.put("p", 1)
     var input = ArrayDeque<Long>()
     var output = executeInstruction(0, list, registers, input)
     println(output.second.last())
@@ -61,7 +69,7 @@ private fun executeInstruction(instrStart : Int, list: ArrayList<String>, regist
     var currentCtr = instrStart
     while (currentCtr >= 0 && currentCtr < list.size) {
         var line = list[currentCtr]
-        println(line)
+//        println(line)
         val split = line.split(" ")
         val instr = split[0]
         val registerToActOn = split[1]
@@ -71,19 +79,17 @@ private fun executeInstruction(instrStart : Int, list: ArrayList<String>, regist
         }
 
         if (instr == "snd") {
-            val value = if (registerToActOn.toIntOrNull() == null) getValue(registers, registerToActOn) else registerToActOn.toLong()
+            val value = if (registers.containsKey(registerToActOn)) {registers.get(registerToActOn)} else registerToActOn.toLong()
             outputs.add(value)
-            currentCtr++
         } else if (instr == "set") {
-            if (secondArg.toLongOrNull() != null) {
+            if (!registers.containsKey(secondArg)) {
                 registers.put(registerToActOn, secondArg.toLong())
             } else {
-                val secondVal = getValue(registers, secondArg)
-                registers.put(registerToActOn, secondVal) // operator
+                val secondVal = registers.get(secondArg)!!
+                registers.put(registerToActOn, secondVal)
             }
-            currentCtr++
         } else if (instr == "add") {
-            if (secondArg.toLongOrNull() != null) {
+            if (!registers.containsKey(secondArg)) {
                 val value = getValue(registers, registerToActOn)
                 registers.put(registerToActOn, value + secondArg.toLong()) // operator
             } else {
@@ -91,9 +97,8 @@ private fun executeInstruction(instrStart : Int, list: ArrayList<String>, regist
                 val firstVal = getValue(registers, registerToActOn)
                 registers.put(registerToActOn, secondVal + firstVal) // operator
             }
-            currentCtr++
         } else if (instr == "mul") {
-            if (secondArg.toLongOrNull() != null) {
+            if (!registers.containsKey(secondArg)) {
                 val value = getValue(registers, registerToActOn)
                 registers.put(registerToActOn, value * secondArg.toLong())
             } else {
@@ -101,9 +106,8 @@ private fun executeInstruction(instrStart : Int, list: ArrayList<String>, regist
                 val firstVal = getValue(registers, registerToActOn)
                 registers.put(registerToActOn, secondVal * firstVal)
             }
-            currentCtr++
         } else if (instr == "mod") {
-            if (secondArg.toLongOrNull() != null) {
+            if (!registers.containsKey(secondArg)) {
                 val value = getValue(registers, registerToActOn)
                 registers.put(registerToActOn, value % secondArg.toLong())
             } else {
@@ -111,23 +115,27 @@ private fun executeInstruction(instrStart : Int, list: ArrayList<String>, regist
                 val firstVal = getValue(registers, registerToActOn)
                 registers.put(registerToActOn, firstVal % secondVal)
             }
-            currentCtr++
         } else if (instr == "rcv") { // take the new value
             if (inputs.isEmpty()) {
-                return Pair(currentCtr++, outputs) // this is right?
+                return Pair(currentCtr, outputs) // this is right?
             } else {
                 val take = inputs.remove()
                 registers.put(registerToActOn, take)
             }
-            currentCtr++
-        } else if (instr == "jgz") {
-            val value = getValue(registers, registerToActOn)
-            if (value > 0L) {
-                currentCtr += secondArg.toIntOrNull() ?: registers.get(secondArg)!!.toInt() - 1
+        } else if (instr == "jgz") { // bug here: Lesson -- always check inputs -- have a clean way to process inputs so they
+            // don't bite you in the butt.  Here, the "jgz 1 3" jumps always
+            var value = 0L
+            if (!registers.containsKey(registerToActOn)) {
+                value = registerToActOn.toLong()
             } else {
-                currentCtr++
+                value = registers.get(registerToActOn)!!
+            }
+            if (value > 0L) {
+                currentCtr += (secondArg.toIntOrNull() ?: registers.get(secondArg)!!.toInt())
+                continue
             }
         }
+        currentCtr++
     }
     return Pair(0, ArrayDeque())
 }
