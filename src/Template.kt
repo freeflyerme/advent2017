@@ -7,7 +7,3 @@ fun partT_1() {
     val input = readString("DayX.txt")
 
 }
-
-fun changeablePart() {
-
-}

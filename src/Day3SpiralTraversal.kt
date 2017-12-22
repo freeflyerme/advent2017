@@ -5,13 +5,6 @@ fun main(args: Array<String>) {
     part3_2Redux()
 }
 
-enum class DIRECTION(val dx: Int,val dy: Int) { // Lesson: Enums
-    UP(0, 1),
-    DOWN(0, -1),
-    LEFT(-1, 0),
-    RIGHT(1, 0)
-}
-
 fun part3_1Redux() {
     // initial parameters
     val end =  361527

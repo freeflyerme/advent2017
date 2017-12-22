@@ -50,22 +50,13 @@ fun part19_1() {  // Part1: LIWQYKMRP // Part2: 16764
         steps++
     }
 
-    println("Visited: $visited")
+    println("Visited: $visited") // Lesson: String interpolation
     visited.forEach{ print(it) }
     println("steps: $steps")
 }
 
-private fun getOpposite(dir : DIRECTION): DIRECTION {
-    return when (dir) {
-        DIRECTION.DOWN -> DIRECTION.UP
-        DIRECTION.UP -> DIRECTION.DOWN
-        DIRECTION.LEFT -> DIRECTION.RIGHT
-        DIRECTION.RIGHT -> DIRECTION.LEFT
-    }
-}
-
 private fun changeDirection(x: Int, y: Int, direction: DIRECTION, grid: ArrayList<ArrayList<String>>): DIRECTION {
-    val dirsToCheck = DIRECTION.values().filter { it != direction && it != getOpposite(direction) } // also need to remove opposite
+    val dirsToCheck = DIRECTION.values().filter { it != direction && it != getOppositeDirection(direction) } // also need to remove opposite
 
     for (dir in dirsToCheck) {
         val newY = y + dir.dy

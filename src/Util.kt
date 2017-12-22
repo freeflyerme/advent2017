@@ -88,3 +88,19 @@ fun hexToBin(input: String) : String? {
     hexToBin.put("f","1111")
     return hexToBin.get(input)
 }
+
+enum class DIRECTION(val dx: Int,val dy: Int) { // Lesson: Enums
+    UP(0, 1),
+    DOWN(0, -1),
+    LEFT(-1, 0),
+    RIGHT(1, 0)
+}
+
+fun getOppositeDirection(dir : DIRECTION): DIRECTION {
+    return when (dir) {
+        DIRECTION.DOWN -> DIRECTION.UP
+        DIRECTION.UP -> DIRECTION.DOWN
+        DIRECTION.LEFT -> DIRECTION.RIGHT
+        DIRECTION.RIGHT -> DIRECTION.LEFT
+    }
+}
