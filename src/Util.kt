@@ -104,3 +104,42 @@ fun getOppositeDirection(dir : DIRECTION): DIRECTION {
         DIRECTION.RIGHT -> DIRECTION.LEFT
     }
 }
+
+fun turnLeft(dir : DIRECTION): DIRECTION {
+    return when(dir) {
+        DIRECTION.UP -> DIRECTION.LEFT
+        DIRECTION.DOWN -> DIRECTION.RIGHT
+        DIRECTION.LEFT -> DIRECTION.DOWN
+        DIRECTION.RIGHT -> DIRECTION.UP
+    }
+}
+
+fun turnRight(dir : DIRECTION): DIRECTION {
+    return when(dir) {
+        DIRECTION.LEFT -> DIRECTION.UP
+        DIRECTION.RIGHT -> DIRECTION.DOWN
+        DIRECTION.DOWN -> DIRECTION.LEFT
+        DIRECTION.UP -> DIRECTION.RIGHT
+    }
+}
+
+fun readToGrid(input: String, value :Int = 1): Array<Array<Int>>{
+    val split = input.split("\n")
+    var result = Array(split.size, {Array(split.size, {0})})
+    for (line in split.withIndex()) {
+        for (c in line.value.withIndex()) {
+            if (c.value == '#') {
+                result[line.index][c.index] = value
+            }
+        }
+    }
+    return result
+}
+
+fun setSquareInGrid(x : Int, y: Int, input: Array<Array<Int>>, grid: Array<Array<Int>>) {
+    for (i in 0 until input.size) {
+        for (j in 0 until input.size) {
+            grid[x+i][y+j] = input[i][j]
+        }
+    }
+}

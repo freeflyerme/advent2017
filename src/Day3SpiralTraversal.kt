@@ -94,7 +94,7 @@ private fun moveToNewCell(x: Int, currentDirection: DIRECTION, y: Int): Pair<Int
     return Pair(x1, y1)
 }
 
-fun getNextDirection(currentDirection: DIRECTION): DIRECTION {
+private fun getNextDirection(currentDirection: DIRECTION): DIRECTION {
     when(currentDirection) {
         DIRECTION.UP -> return DIRECTION.LEFT
         DIRECTION.DOWN -> return DIRECTION.RIGHT

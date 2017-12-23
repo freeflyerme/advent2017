@@ -62,6 +62,7 @@ fun readInputPatterns(): HashMap<ArrayList<ArrayList<Int>>, ArrayList<ArrayList<
         val rot3 = rotateClockwise(rot2)
         hashMap.put(rot3, value)
 
+        // Add in the rotated and flipped options
         hashMap.put(flipVertical(rot1), value)
         hashMap.put(flipHorizontal(rot1), value)
         hashMap.put(flipVertical(rot2), value)
