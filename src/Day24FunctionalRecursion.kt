@@ -5,7 +5,7 @@ fun main(args: Array<String>) {
 data class Link constructor (val ends : ArrayList<Int>)
 
 
-fun part24_2() { // 1994 (34 long)
+fun part24_2() { // 1994 strong (34 long)
     // Need longest bridge
 
     // What structure to use?  A list?  Sure
@@ -25,7 +25,7 @@ fun part24_2() { // 1994 (34 long)
         val max = findMaxStrength2(startLink, mutableLinks, 0, startLink.ends.max()!!, 0)
         max
     }
-    val longestBridge: Pair<Int, Int> = result.maxBy { it.second }!! // Lesson I had the right answer, but human error in reading
+    val longestBridge: Pair<Int, Int> = result.maxBy { it.second }!! // Lesson: I had the right answer, but human error in reading
     // the results
     val maxStrengths = result.filter { it.second == longestBridge.second }
     println(maxStrengths.maxBy { it.first }!!)
@@ -36,7 +36,7 @@ private fun findMaxStrength2(startLink: Link, mutableLinks: ArrayList<Link>, cur
         Pair<Int, Int> {
 
     var newMax = currentMax + startLink.ends.sum()
-    var links = ArrayList<Link>() // Lesson: mutable list modified by below.  Need a clone
+    var links = ArrayList<Link>()
     links.addAll(mutableLinks)
     links.remove(startLink)
 
