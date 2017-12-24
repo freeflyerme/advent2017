@@ -16,7 +16,7 @@ fun part23_2() { // result in "h", starting at instruction 1
 //    val list = readAsStringList("Day23.txt", "\n")
 //
 //    var registers = HashMap<String, Long>()
-//    registers.put("a", 1)
+//    registers.put("a", 1)  // Lesson: read the instructions carefully -- only A as a register is changed.  The rest remains 0
 //    registers.put("b", 0)
 //    registers.put("c", 0)
 //    registers.put("d", 0)
@@ -87,6 +87,9 @@ private fun executeInstruction(instrStart : Int, list: ArrayList<String>, regist
 
         if (instr == "set") {
             if (!registers.containsKey(secondArg)) {
+                // Lesson: this implementation is unoptimized -- I needed a more concise and
+                // less error  prone  way of dealing with operators.  The % and - operators
+                // both errored because the order of operations were off.
                 registers.put(firstArg, secondArg.toLong())
             } else {
                 val secondVal = registers.get(secondArg)!!
