@@ -1,0 +1,32 @@
+set b 65
+set c b
+jnz a 2  // if a != 0, b = b * 100 (line 5)
+jnz 1 5    // else skip to line 9
+mul b 100
+sub b -100000 // increase b by 100K b=100000
+set c b       // store b in c
+sub c -17000  // decrease c by 17K  c=117000
+set f 1
+set d 2     // initialize d = 2
+set e 2     // initialize e = 2
+set g d     // set g = d : loop from line 20: find a number s.t. g * e - b == 0, then sets f = 0, and decrements e
+mul g e       // g = g * e, e not initialized first round
+sub g b       // g = g - b,  -- g=117000
+jnz g 2       // if g != 0, to go line 17
+set f 0          // else f = 0
+sub e -1      // e++
+set g e       // g
+sub g b      // exit condition, when E and B are equal -- (G is set to be E earlier)
+jnz g -8    // if g !=0, jump to line 12
+sub d -1    // d--
+set g d     //
+sub g b     //  exit condition, D and B are equal -- (G is set to be D earlier)
+jnz g -13  // loop again to line 11
+jnz f 2    // only escape if the above loop doesn't execute line 16
+sub h -1
+set g b
+sub g c
+jnz g 2
+jnz 1 3
+sub b -17  // reduce b by 17
+jnz 1 -23  // start over
