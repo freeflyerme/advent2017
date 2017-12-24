@@ -1,11 +1,11 @@
 fun main(args: Array<String>) {
-    part24_2()
+    part24_1()
 }
 
 data class Link constructor (val ends : ArrayList<Int>)
 
 
-fun part24_2() { // not 1964
+fun part24_2() { // 1994 (34 long)
     // Need longest bridge
 
     // What structure to use?  A list?  Sure
@@ -25,7 +25,8 @@ fun part24_2() { // not 1964
         val max = findMaxStrength2(startLink, mutableLinks, 0, startLink.ends.max()!!, 0)
         max
     }
-    val longestBridge: Pair<Int, Int> = result.maxBy { it.second }!!
+    val longestBridge: Pair<Int, Int> = result.maxBy { it.second }!! // Lesson I had the right answer, but human error in reading
+    // the results
     val maxStrengths = result.filter { it.second == longestBridge.second }
     println(maxStrengths.maxBy { it.first }!!)
 
@@ -55,14 +56,8 @@ private fun findMaxStrength2(startLink: Link, mutableLinks: ArrayList<Link>, cur
     }
 }
 
-fun part24_1() { // not 1554
+fun part24_1() { // 2006
     // Algorithm:
-    /**
-     * Either take it, or without it.
-     * with a starting point.
-     * Put into a list, then find max
-     */
-
     // What structure to use?  A list?  Sure
     val links = readAsStringList("Day24.txt", "\n").map { line ->
         var ends = ArrayList<Int>()
@@ -94,15 +89,14 @@ private fun findMaxStrength(startLink: Link, mutableLinks: ArrayList<Link>, curr
     links.remove(startLink)
 
     val matches = links.filter { it.ends.contains(endToMatch) }
-    if (matches.isEmpty()) {
-        return newMax
-    } else {
-        return matches.map { match ->
-            findMaxStrength(match,
-                    links,
-                    newMax,
-                    if (match.ends.first() == endToMatch) match.ends.last() else match.ends.first())
-        }.max()!!
+    return when (matches.isEmpty()) {  // Lesson: convert if statement to a return <case> statement
+        true -> newMax
+        false ->  // very functional and Scala like
+            return matches.map { match ->
+                findMaxStrength(match,
+                        links,
+                        newMax,
+                        if (match.ends.first() == endToMatch) match.ends.last() else match.ends.first())
+            }.max()!!
     }
-
 }
